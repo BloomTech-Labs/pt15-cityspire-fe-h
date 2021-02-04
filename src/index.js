@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import {
   BrowserRouter as Router,
@@ -20,6 +20,7 @@ import { config } from './utils/oktaConfig';
 import { LoadingComponent } from './components/common';
 import { MapPage } from './components/pages/MapPage';
 import SearchBar from './components/common/Searchbar/SearchBar';
+import { CityContext } from './state/contexts';
 
 ReactDOM.render(
   <Router>
@@ -41,13 +42,17 @@ function App() {
     history.push('/login');
   };
 
+  const [city, setCity] = useState({});
+
   return (
     <Security {...config} onAuthRequired={authHandler}>
       <Switch>
         <Route path="/login" component={LoginPage} />
         <Route path="/implicit/callback" component={LoginCallback} />
-        <Route path="/map" component={MapPage} />
-        <Route path="/search" component={SearchBar} />
+        <CityContext.Provider value={[city, setCity]}>
+          <Route path="/map" component={MapPage} />
+          <Route path="/search" component={SearchBar} />
+        </CityContext.Provider>
         {/* any of the routes you need secured should be registered as SecureRoutes */}
         <SecureRoute
           path="/"
