@@ -1,3 +1,3 @@
-import { CityContext } from './cityContext';
+import { LocationContext } from './locationContext';
 
-export { CityContext };
+export { LocationContext };

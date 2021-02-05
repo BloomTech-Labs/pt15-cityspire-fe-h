@@ -20,7 +20,7 @@ import { config } from './utils/oktaConfig';
 import { LoadingComponent } from './components/common';
 import { MapPage } from './components/pages/MapPage';
 import SearchBar from './components/common/Searchbar/SearchBar';
-import { CityContext } from './state/contexts';
+import { LocationContext } from './state/contexts';
 
 ReactDOM.render(
   <Router>
@@ -42,17 +42,17 @@ function App() {
     history.push('/login');
   };
 
-  const [city, setCity] = useState({});
+  const [location, setLocation] = useState({});
 
   return (
     <Security {...config} onAuthRequired={authHandler}>
       <Switch>
         <Route path="/login" component={LoginPage} />
         <Route path="/implicit/callback" component={LoginCallback} />
-        <CityContext.Provider value={[city, setCity]}>
+        <LocationContext.Provider value={{ location, setLocation }}>
           <Route path="/map" component={MapPage} />
           <Route path="/search" component={SearchBar} />
-        </CityContext.Provider>
+        </LocationContext.Provider>
         {/* any of the routes you need secured should be registered as SecureRoutes */}
         <SecureRoute
           path="/"

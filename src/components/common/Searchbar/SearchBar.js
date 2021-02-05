@@ -1,11 +1,11 @@
 import React, { useState, useContext } from 'react';
 import { Input } from 'antd';
-import cityOnSubmit from '../../../utils/citySubmit';
-import { CityContext } from '../../../state/contexts';
+import locationOnSubmit from '../../../utils/locationSubmit';
+import { LocationContext } from '../../../state/contexts';
 
 const SearchBar = () => {
   const [searchVal, setSearchVal] = useState('');
-  const [setCity] = useContext(CityContext);
+  const { setLocation } = useContext(LocationContext);
 
   const handleChanges = event => {
     setSearchVal(event.target.value);
@@ -19,7 +19,7 @@ const SearchBar = () => {
       value={searchVal}
       onChange={handleChanges}
       enterButton
-      onSearch={() => cityOnSubmit(setCity)}
+      onSearch={() => locationOnSubmit(setLocation, searchVal)}
     />
   );
 };
