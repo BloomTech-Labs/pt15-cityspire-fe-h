@@ -3,11 +3,7 @@ import React from 'react';
 // dependencies
 import { Link } from 'react-router-dom';
 
-const NavbarUser = ({ currentUser }) => {
-  const handleLogOut = e => {
-    e.preventDefault();
-  };
-
+const NavbarUser = ({ currentUser, authService }) => {
   return (
     <>
       {currentUser ? (
@@ -21,19 +17,19 @@ const NavbarUser = ({ currentUser }) => {
             <i className="fas fa-user fa-lg"></i>
           </div>
           <div className="dropdown-menu dropdown-menu-right">
-            <div className="dropdown-header">{currentUser.displayName}</div>
+            <div className="dropdown-header">{currentUser.given_name}</div>
             <div className="dropdown-divider"></div>
             <button
               className="dropdown-item dropdown-item-custom"
               type="button"
-              onClick={handleLogOut}
+              handleClick={() => authService.logout()}
             >
               Log Out
             </button>
           </div>
         </div>
       ) : (
-        <Link to={'/'} className="nav-custom__link">
+        <Link to={'/login'} className="nav-custom__link">
           <i className="far fa-user fa-lg"></i>
         </Link>
       )}
