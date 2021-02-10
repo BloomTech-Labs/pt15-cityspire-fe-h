@@ -3,7 +3,8 @@ import { useOktaAuth } from '@okta/okta-react';
 
 import RenderNavbar from './RenderNavbar';
 
-function Navbar({ LoadingComponent }) {
+function Navbar() {
+  // eslint-disable-next-line no-unused-vars
   const { authState, authService } = useOktaAuth();
   const [userInfo, setUserInfo] = useState(null);
   // eslint-disable-next-line
@@ -28,16 +29,7 @@ function Navbar({ LoadingComponent }) {
     return () => (isSubscribed = false);
   }, [memoAuthService]);
 
-  return (
-    <>
-      {authState.isAuthenticated && !userInfo && (
-        <LoadingComponent message="Fetching user profile..." />
-      )}
-      {authState.isAuthenticated && userInfo && (
-        <RenderNavbar userInfo={userInfo} authService={authService} />
-      )}
-    </>
-  );
+  return <RenderNavbar userInfo={userInfo} authService={authService} />;
 }
 
 export default Navbar;

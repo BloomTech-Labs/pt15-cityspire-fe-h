@@ -4,9 +4,11 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu } from 'antd';
 import { QuestionCircleOutlined, UserOutlined } from '@ant-design/icons';
+// constants
+const { SubMenu } = Menu;
 
 const RenderNavbar = ({ userInfo, authService, ...props }) => {
-  const [current, setCurrent] = useState('mail');
+  const [current, setCurrent] = useState('');
 
   const handleClick = e => {
     console.log('click', e);
@@ -15,7 +17,12 @@ const RenderNavbar = ({ userInfo, authService, ...props }) => {
 
   return (
     <>
-      <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
+      <Menu
+        onClick={handleClick}
+        selectedKeys={[current]}
+        mode="horizontal"
+        theme="dark"
+      >
         <Menu.Item key="logo">
           <span>CitySpire</span>
         </Menu.Item>
@@ -25,15 +32,33 @@ const RenderNavbar = ({ userInfo, authService, ...props }) => {
           </Link>
         </Menu.Item>
         {userInfo ? (
-          <Menu.Item key="user" icon={<UserOutlined />}>
-            <Link to="/profile" rel="noopener noreferrer">
-              My Profile
-            </Link>
-          </Menu.Item>
+          <SubMenu
+            key="SubMenu"
+            icon={<UserOutlined />}
+            title={userInfo.given_name}
+          >
+            <Menu.Item key="profile">
+              <Link to="/profile" rel="noopener noreferrer">
+                My Profile
+              </Link>
+            </Menu.Item>
+            <Menu.Item key="logout">
+              <Link
+                to="/"
+                rel="noopener noreferrer"
+                onClick={e => {
+                  e.preventDefault();
+                  authService.logout();
+                }}
+              >
+                Log out
+              </Link>
+            </Menu.Item>
+          </SubMenu>
         ) : (
           <Menu.Item key="alipay">
             <Link to="/login" rel="noopener noreferrer">
-              Login
+              Log in
             </Link>
           </Menu.Item>
         )}

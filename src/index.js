@@ -18,6 +18,7 @@ import { ProfileListPage } from './components/pages/ProfileList';
 import { LoginPage } from './components/pages/Login';
 import { ExampleDataViz } from './components/pages/ExampleDataViz';
 import { config } from './utils/oktaConfig';
+// eslint-disable-next-line no-unused-vars
 import { LoadingComponent } from './components/common';
 import { Navbar } from './components/common/Navbar';
 
@@ -43,7 +44,7 @@ function App() {
 
   return (
     <Security {...config} onAuthRequired={authHandler}>
-      <Navbar LoadingComponent={LoadingComponent} />
+      <Navbar />
       <Switch>
         <Route path="/login" component={LoginPage} />
         <Route path="/implicit/callback" component={LoginCallback} />
