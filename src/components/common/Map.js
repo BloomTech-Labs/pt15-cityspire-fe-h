@@ -49,7 +49,6 @@ const Map = ({ initialstate }) => {
           mapStyle="mapbox://styles/onemiss/ckk1x7xcr16q917mjfrha2h2o"
           onViewportChange={viewport => {
             setViewport(viewport);
-            console.log(viewport);
           }}
         >
           <Marker
