@@ -17,7 +17,6 @@ const Map = ({ initialstate }) => {
       };
   // token to use mapbox, would like to set this up as a local env file but it keeps fucking up lol
   /*Sets up our initial state with needed information to pass to reactMapGL component*/
-  console.log(initialstate);
 
   const [viewport, setViewport] = useState(variable);
 
