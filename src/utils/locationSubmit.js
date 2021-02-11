@@ -10,11 +10,9 @@ const locationOnSubmit = (formatter, state_setter, value) => {
   axios
     .post('https://h-ds2.cityspire.dev/location', reqBody)
     .then(res => {
-      console.log(res.data);
       //first we format the data
       const new_value = formatter(JSON.parse(res.data)[0]);
       //then pass it to state.
-      console.log(new_value);
       info = new_value;
     })
     .catch(err => {
