@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import {
   BrowserRouter as Router,
@@ -21,6 +21,9 @@ import { config } from './utils/oktaConfig';
 // eslint-disable-next-line no-unused-vars
 import { LoadingComponent } from './components/common';
 import { Navbar } from './components/common/Navbar';
+import { MapPage } from './components/pages/MapPage';
+import SearchBar from './components/common/Searchbar/SearchBar';
+import { LocationContext } from './state/contexts';
 
 ReactDOM.render(
   <Router>
@@ -42,14 +45,27 @@ function App() {
     history.push('/login');
   };
 
+  const [location, setLocation] = useState({});
+
   return (
     <Security {...config} onAuthRequired={authHandler}>
       <Navbar />
+      
       <Switch>
         <Route path="/login" component={LoginPage} />
         <Route path="/implicit/callback" component={LoginCallback} />
+
+        <LocationContext.Provider value={{ location, setLocation }}>
+          <Route path="/map" component={MapPage} />
+          <Route path="/search" component={SearchBar} />
+        </LocationContext.Provider>
+
         {/* any of the routes you need secured should be registered as SecureRoutes */}
-        <SecureRoute path="/" exact component={() => <LandingPage />} />
+        <SecureRoute
+          path="/"
+          exact
+          component={() => <LandingPage LoadingComponent={LoadingComponent} />}
+        />
         <SecureRoute path="/example-list" component={ExampleListPage} />
 
         <SecureRoute path="/profile-list" component={ProfileListPage} />
