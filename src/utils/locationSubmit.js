@@ -23,8 +23,6 @@ const locationOnSubmit = (formatter, state_setter, value) => {
     .finally(() => {
       state_setter(info);
     });
-
-  console.log('submitted');
 };
 
 export default locationOnSubmit;
