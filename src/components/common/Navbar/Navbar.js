@@ -1,63 +1,35 @@
-import React from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
+import { useOktaAuth } from '@okta/okta-react';
 
-// components
-import NavbarMenu from './NavbarMenu';
-import NavbarUser from './NavbarUser';
-import NavbarDropdown from './NavbarDropdown';
+import RenderNavbar from './RenderNavbar';
 
-// styles
-import './Navbar.css';
+function Navbar() {
+  // eslint-disable-next-line no-unused-vars
+  const { authState, authService } = useOktaAuth();
+  const [userInfo, setUserInfo] = useState(null);
+  // eslint-disable-next-line
+  const [memoAuthService] = useMemo(() => [authService], []);
 
-const Navbar = () => {
-  return (
-    <>
-      <nav className="sticky-top nav-custom">
-        <div className="row m-0 py-3 justify-content-between align-items-center">
-          <div className="col d-md-none text-left">
-            <a
-              data-toggle="collapse"
-              href="#multiCollapse"
-              role="button"
-              aria-expanded="false"
-              aria-controls="multiCollapse"
-              className="nav-custom__link"
-            >
-              <i className="fas fa-bars fa-lg"></i>
-            </a>
-          </div>
-          <div className="col d-md-none text-center">
-            <a className="nav-custom__logo" href="/">
-              CitySpire
-            </a>
-          </div>
-          <div className="col d-md-none text-right">
-            <NavbarUser />
-          </div>
-          <div className="col-12 d-none d-md-block text-center">
-            <div className="row align-items-center">
-              <div className="col d-none d-md-block text-md-left">
-                <span className="mr-4">
-                  <a className="nav-custom__logo" href="/">
-                    CitySpire
-                  </a>
-                </span>
-                <NavbarMenu />
-              </div>
-              <div className="col d-none d-md-block text-md-right">
-                <NavbarUser />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div
-          className="row p-0 m-0 collapse multi-collapse d-md-none"
-          id="multiCollapse"
-        >
-          <NavbarDropdown />
-        </div>
-      </nav>
-    </>
-  );
-};
+  useEffect(() => {
+    let isSubscribed = true;
+
+    memoAuthService
+      .getUser()
+      .then(info => {
+        // if user is authenticated we can use the authService to snag some user info.
+        // isSubscribed is a boolean toggle that we're using to clean up our useEffect.
+        if (isSubscribed) {
+          setUserInfo(info);
+        }
+      })
+      .catch(err => {
+        isSubscribed = false;
+        return setUserInfo(null);
+      });
+    return () => (isSubscribed = false);
+  }, [memoAuthService]);
+
+  return <RenderNavbar userInfo={userInfo} authService={authService} />;
+}
 
 export default Navbar;
