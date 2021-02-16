@@ -12,12 +12,15 @@ import 'antd/dist/antd.less';
 
 import { NotFoundPage } from './components/pages/NotFound';
 import { ExampleListPage } from './components/pages/ExampleList';
-import { HomePage } from './components/pages/Home';
+// import { HomePage } from './components/pages/Home';
+import { LandingPage } from './components/pages/Landing';
 import { ProfileListPage } from './components/pages/ProfileList';
 import { LoginPage } from './components/pages/Login';
 import { ExampleDataViz } from './components/pages/ExampleDataViz';
 import { config } from './utils/oktaConfig';
+// eslint-disable-next-line no-unused-vars
 import { LoadingComponent } from './components/common';
+import { Navbar } from './components/common/Navbar';
 import { MapPage } from './components/pages/MapPage';
 import SearchBar from './components/common/Searchbar/SearchBar';
 import { LocationContext } from './state/contexts';
@@ -46,18 +49,22 @@ function App() {
 
   return (
     <Security {...config} onAuthRequired={authHandler}>
+      <Navbar />
+      
       <Switch>
         <Route path="/login" component={LoginPage} />
         <Route path="/implicit/callback" component={LoginCallback} />
+
         <LocationContext.Provider value={{ location, setLocation }}>
           <Route path="/map" component={MapPage} />
           <Route path="/search" component={SearchBar} />
         </LocationContext.Provider>
+
         {/* any of the routes you need secured should be registered as SecureRoutes */}
         <SecureRoute
           path="/"
           exact
-          component={() => <HomePage LoadingComponent={LoadingComponent} />}
+          component={() => <LandingPage LoadingComponent={LoadingComponent} />}
         />
         <SecureRoute path="/example-list" component={ExampleListPage} />
 
