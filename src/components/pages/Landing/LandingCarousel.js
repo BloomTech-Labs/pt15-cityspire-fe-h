@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Carousel } from 'antd';
 
-const HomeCarousel = () => {
+const LandingCarousel = () => {
   return (
     <Carousel autoplay>
       <div>
@@ -18,4 +18,4 @@ const HomeCarousel = () => {
   );
 };
 
-export default HomeCarousel;
+export default LandingCarousel;

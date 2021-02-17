@@ -20,6 +20,7 @@ import { config } from './utils/oktaConfig';
 import { LoadingComponent } from './components/common';
 import { MapPage } from './components/pages/MapPage';
 import SearchBar from './components/common/Searchbar/SearchBar';
+import LandingContainer, { LandingPage } from './components/pages/Landing';
 import { LocationContext } from './state/contexts';
 
 ReactDOM.render(
@@ -48,11 +49,7 @@ function App() {
     <Security {...config} onAuthRequired={authHandler}>
       <Switch>
         <LocationContext.Provider value={{ location, setLocation }}>
-          <Route
-            path="/"
-            exact
-            component={() => <HomePage LoadingComponent={LoadingComponent} />}
-          />
+          <Route path="/" exact component={LandingPage} />
           <Route path="/map" component={MapPage} />
           <Route path="/search" component={SearchBar} />
         </LocationContext.Provider>
