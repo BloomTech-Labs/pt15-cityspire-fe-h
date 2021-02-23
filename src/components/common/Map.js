@@ -1,18 +1,25 @@
-import React, { useState } from 'react';
-import ReactMapGL, { Marker } from 'react-map-gl';
+import React, { useState, useContext, useEffect } from 'react';
+import ReactMapGL, { Marker, FlyToInterpolater } from 'react-map-gl';
+import locationOnSubmit from '../../utils/locationSubmit';
+import { LocationContext } from '../../state/contexts';
+import SearchBar from './Searchbar/SearchBar';
 
-const Map = ({ initial_state }) => {
+const Map = ({ initialstate }) => {
+  const curr = useContext(LocationContext);
+  const variable = initialstate
+    ? initialstate
+    : {
+        latitude: 0,
+        longitude: 0,
+        width: '100vw',
+        height: '100vh',
+        zoom: 8,
+      };
   // token to use mapbox, would like to set this up as a local env file but it keeps fucking up lol
   /*Sets up our initial state with needed information to pass to reactMapGL component*/
-  const [viewport, setViewport] = useState({
-    latitude: 40.73061,
-    longitude: -73.935242,
-    //The width and height has to be suffixed with vw for view width and vh for view height.
-    width: '100vw',
-    height: '100vh',
-    zoom: 8,
-  });
-  //
+
+  const [viewport, setViewport] = useState(variable);
+
   {
     /*deconstruct the viewport opbject and pass it to ReactMapGL component*/
   }
@@ -28,25 +35,33 @@ const Map = ({ initial_state }) => {
   {
     /*The Marker component takes latitude, longitude, and two boolians to prevent the map from being interacted with when the user clicks on the marker but can be passed more, if interested read here https://visgl.github.io/react-map-gl/docs/api-reference/marker#properties */
   }
+
+  useEffect(() => {
+    setViewport(curr.location);
+  }, [curr.location]);
   return (
-    <div>
-      <ReactMapGL
-        {...viewport}
-        mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
-        mapStyle="mapbox://styles/onemiss/ckk1x7xcr16q917mjfrha2h2o"
-        onViewportChange={viewport => {
-          setViewport(viewport);
-        }}
-      >
-        <Marker
-          latitude={40.73061}
-          longitude={-73.935242}
-          captureClick={true}
-          captureDoubleClick={true}
+    <div style={{ position: 'relative' }}>
+      {viewport && (
+        <ReactMapGL
+          {...viewport}
+          style={{ zIndex: 0 }}
+          mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
+          mapStyle="mapbox://styles/onemiss/ckk1x7xcr16q917mjfrha2h2o"
+          onViewportChange={viewport => {
+            setViewport(viewport);
+          }}
         >
-          <p>placeholder</p>
-        </Marker>
-      </ReactMapGL>
+          <Marker
+            latitude={40.73061}
+            longitude={-73.935242}
+            captureClick={true}
+            captureDoubleClick={true}
+          >
+            <img src="img/pin.jpg" />
+          </Marker>
+          <SearchBar />
+        </ReactMapGL>
+      )}
     </div>
   );
 };
