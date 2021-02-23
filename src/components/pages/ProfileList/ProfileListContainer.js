@@ -9,6 +9,7 @@ import RenderProfileListPage from './RenderProfileListPage';
 
 // Here is an example of using our reusable List component to display some list data to the UI.
 const ProfileList = () => {
+  console.log('hello');
   const { authState } = useOktaAuth();
 
   return (

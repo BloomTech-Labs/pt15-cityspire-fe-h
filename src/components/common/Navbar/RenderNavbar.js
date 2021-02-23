@@ -3,8 +3,9 @@ import React, { useState } from 'react';
 // dependencies
 import { Link } from 'react-router-dom';
 import { Menu } from 'antd';
-import { QuestionCircleOutlined, UserOutlined } from '@ant-design/icons';
-// constants
+import { SearchOutlined, UserOutlined } from '@ant-design/icons';
+// constants and styles
+import logo from '../../../assets/CitySpireLogo-Light.png';
 const { SubMenu } = Menu;
 
 const RenderNavbar = ({ userInfo, authService, ...props }) => {
@@ -24,11 +25,13 @@ const RenderNavbar = ({ userInfo, authService, ...props }) => {
         theme="dark"
       >
         <Menu.Item key="logo">
-          <span>CitySpire</span>
+          <a href="/">
+            <img src={logo} alt="logo" width="70" />
+          </a>
         </Menu.Item>
-        <Menu.Item key="question" icon={<QuestionCircleOutlined />}>
-          <Link to="/help" rel="noopener noreferrer">
-            Help
+        <Menu.Item key="question" icon={<SearchOutlined />}>
+          <Link to="/search" rel="noopener noreferrer">
+            Search for Location
           </Link>
         </Menu.Item>
         {userInfo ? (
@@ -38,7 +41,7 @@ const RenderNavbar = ({ userInfo, authService, ...props }) => {
             title={userInfo.given_name}
           >
             <Menu.Item key="profile">
-              <Link to="/profile" rel="noopener noreferrer">
+              <Link to="/profile-list" rel="noopener noreferrer">
                 My Profile
               </Link>
             </Menu.Item>
