@@ -10,7 +10,7 @@ import {
 import { Security, LoginCallback, SecureRoute } from '@okta/okta-react';
 import 'antd/dist/antd.less';
 
-import { NotFoundPage } from './components/pages/NotFound';
+// import { NotFoundPage } from './components/pages/NotFound';
 import { ExampleListPage } from './components/pages/ExampleList';
 // import { HomePage } from './components/pages/Home';
 import { LandingPage } from './components/pages/Landing';
@@ -50,15 +50,10 @@ function App() {
   return (
     <Security {...config} onAuthRequired={authHandler}>
       <Navbar />
-      
+
       <Switch>
         <Route path="/login" component={LoginPage} />
         <Route path="/implicit/callback" component={LoginCallback} />
-
-        <LocationContext.Provider value={{ location, setLocation }}>
-          <Route path="/map" component={MapPage} />
-          <Route path="/search" component={SearchBar} />
-        </LocationContext.Provider>
 
         {/* any of the routes you need secured should be registered as SecureRoutes */}
         <SecureRoute
@@ -70,7 +65,13 @@ function App() {
 
         <SecureRoute path="/profile-list" component={ProfileListPage} />
         <SecureRoute path="/datavis" component={ExampleDataViz} />
-        <Route component={NotFoundPage} />
+
+        <LocationContext.Provider value={{ location, setLocation }}>
+          <Route path="/map" component={MapPage} />
+          <Route path="/search" component={SearchBar} />
+        </LocationContext.Provider>
+
+        {/* <Route component={NotFoundPage} />      */}
       </Switch>
     </Security>
   );
