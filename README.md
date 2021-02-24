@@ -14,12 +14,12 @@ City Spire analyzes data from cities such as populations, cost of living, rental
 </p>
 ## UI in action
 <img src="https://github.com/FabiolaSaga/GOL/blob/main/UI.gif" width="350" />
-### iOS Frameworks used:
-- UIKit
-- MapKit
-- Networking
+### Web frameworks used:
+- React
+- Context API
+- React Map GL
 - OktaAuth
-- CoreData
+
 ### Project Lead
 |                                                      [Bobby Hall Jr](https://github.com/bobbyhalljr)                                                      |
 | :-----------------------------------------------------------------------------------------------------------------------------------------: |
